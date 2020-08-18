@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="description" content="Documentation Page of the Movie API, created by Sean Kopp-Reddy">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/styles.production.css">
     <title> Sean's Movie API- Documentation </title>
   </head>
   <body>
@@ -14,5 +15,107 @@
       The Movie API, created by Sean Kopp-Reddy, allows you to search through it's extensive database of movies via movie title, director, genre, etc.
       Once you register you can add movies to your favorites list, or make a queue of movie's to watch in you "To Watch" list!
     </p>
+    <table>
+      <tr>
+        <th> Business Logic </th>
+        <th> URL </th>
+        <th> HTTP Method </th>
+        <th> Request Body Data Format </th>
+        <th> Response Body Data Format </th>
+      </tr>
+      <tr>
+        <td> Get a list of all movies </td>
+        <td> /movies </td>
+        <td> GET </td>
+        <td> None </td>
+        <td> A JSON object holding data about all movies. </td>
+      </tr>
+      <tr>
+        <td> Get info about a movie by title </td>
+        <td> /movies/[title] </td>
+        <td> GET </td>
+        <td> None </td>
+        <td> A JSON object holding info about a single movie, containing a title, director, and description. Example:
+          <br> {
+          <br> title: 'Fight Club',
+          <br> director: 'David Fincher',
+          <br> description: 'An insomniac office worker and a devil-may-care soapmaker form an underground fight club that evolves into something much, much more.'
+          <br> }
+        </td>
+      </tr>
+      <tr>
+        <td> Get info about genre by name/title of genre  </td>
+        <td> /genres/[name] </td>
+        <td> GET </td>
+        <td> None </td>
+        <td> A JSON object holding info about a single genre, containg a genre name. Example:
+          <br> {
+          <br> name: 'Action'
+          <br> }
+        </td>
+      </tr>
+      <tr>
+        <td> Get info about a director by name </td>
+        <td> /directors/[name] </td>
+        <td> GET </td>
+        <td> None </td>
+        <td> A JSON object holding info about a single director, containg a name. Example:
+          <br> {
+          <br> name: 'Hayao Miyazaki'
+          <br> }
+        </td>
+      </tr>
+      <tr>
+        <td> Register as a new user </td>
+        <td> /users </td>
+        <td> POST </td>
+        <td> A JSON object holding data about the new user, structured like:
+          <br> {
+          <br> name: 'Sean Kopp-Reddy',
+          <br> birthday: '04/02/1992'
+          <br> }
+        </td>
+        <td> A message confirming your registration as well as a JSON object holding data about the new user, structured like:
+          <br> {
+          <br> name: 'Sean Kopp-Reddy',
+          <br> birthday: '04/02/1992'
+          <br> }
+        </td>
+      </tr>
+      <tr>
+        <td> Update user info </td>
+        <td> /users/[name] </td>
+        <td> PUT </td>
+        <td> None </td>
+        <td> A message confirming that your information has been updated. </td>
+      </tr>
+      <tr>
+        <td> Add movies to favorite list </td>
+        <td> /users/[name]/favorites </td>
+        <td> PUT </td>
+        <td> A JSON object holding data about the movie to be added, structured like:
+          <br> {
+          <br> title: 'Fight Club',
+          <br> director: 'David Fincher',
+          <br> description: 'An insomniac office worker and a devil-may-care soapmaker form an underground fight club that evolves into something much, much more.'
+          <br> }
+        </td>
+        <td> A message verifying that the movie has been added to your favorites list. </td>
+      </tr>
+      <tr>
+        <td> Remove movies from favorite list </td>
+        <td> /users/[name]/favorites </td>
+        <td> DELETE </td>
+        <td> None </td>
+        <td> A message verifying the movie has been removed from your favorites list. </td>
+      </tr>
+      <tr>
+        <td>  Deregister user </td>
+        <td> /users </td>
+        <td> DELETE </td>
+        <td> None </td>
+        <td> A message verifying that your account has been deleted. </td>
+      </tr>
+    </table>
   </body>
 </html>
