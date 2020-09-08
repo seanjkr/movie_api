@@ -30,91 +30,156 @@
         <td> None </td>
         <td> A JSON object holding data about all movies. </td>
       </tr>
+
       <tr>
         <td> Get info about a movie by title </td>
         <td> /movies/[title] </td>
         <td> GET </td>
         <td> None </td>
-        <td> A JSON object holding info about a single movie, containing a title, director, and description. Example:
-          <br> {
-          <br> title: 'Fight Club',
-          <br> director: 'David Fincher',
-          <br> description: 'An insomniac office worker and a devil-may-care soapmaker form an underground fight club that evolves into something much, much more.'
-          <br> }
+        <td> A JSON object holding info about a single movie; containing an id, title, description, genre info, director info, an image link, and info on whether it is currently a featured movie. Example:
+          <div class="red">
+            <br> {
+            <br>    "_id": "5f51af7e2de9e3bd754846d7",
+            <br>    "Title": "Fight Club",
+            <br>    "Description": "An insomniac office-worker and a devil-may-care soapmaker form an underground fight club that evolves into something much, much more.",
+            <br>    "Genre": {
+            <br>       "Name": "Drama",
+            <br>       "Description": "..."
+            <br>     },
+            <br>    "Director": {
+            <br>      "Name": "David Fincher",
+            <br>      "Bio": "...""
+            <br>      "Birth": "1962"
+            <br>     },
+            <br>    "ImagePath": "https://theposterdb.com/api/assets/70423/view?",
+            <br>    "Featured": true
+            <br>  }
+          </div>
         </td>
       </tr>
+
       <tr>
-        <td> Get info about genre by name/title of genre  </td>
+        <td> Get a list of all genres </td>
+        <td> /genres </td>
+        <td> GET </td>
+        <td> None </td>
+        <td> A JSON object holding data about all genres (see below for format). </td>
+      </tr>
+
+      <tr>
+        <td> Get info about genre by name of genre  </td>
         <td> /genres/[name] </td>
         <td> GET </td>
         <td> None </td>
-        <td> A JSON object holding info about a single genre, containg a genre name. Example:
-          <br> {
-          <br> name: 'Action'
-          <br> }
+        <td> A JSON object holding info about a single genre; containg an id, name, and description. Example:
+          <div class="red">
+            <br> {
+            <br>    "_id":"5f569b6a3f8444092e44449e",
+            <br>    "Name":"Fantasy",
+            <br>    "Description":"Fantasy films are films that belong to the fantasy genre with fantastic themes, usually magic, supernatural events, mythology, folklore, or exotic fantasy worlds. The genre is considered a form of speculative fiction alongside science fiction films and horror films, although the genres do overlap."
+            <br> }
+          </div>
         </td>
       </tr>
+
+      <tr>
+        <td> Get a list of all directors </td>
+        <td> /directors </td>
+        <td> GET </td>
+        <td> None </td>
+        <td> A JSON object holding data about all directors (see below for format). </td>
+      </tr>
+
       <tr>
         <td> Get info about a director by name </td>
         <td> /directors/[name] </td>
         <td> GET </td>
         <td> None </td>
-        <td> A JSON object holding info about a single director, containg a name. Example:
-          <br> {
-          <br> name: 'Hayao Miyazaki'
-          <br> }
+        <td> A JSON object holding info about a single director; containing an id, name, and bio. Example:
+          <div class="red">
+            <br> {
+            <br>    "_id": "5f569cfc3f8444092e4444a1",
+            <br>    "Name": "Hayao Miyazaki",
+            <br>    "Bio": "Hayao Miyazaki is one of Japan's greatest animation directors. The entertaining plots, compelling characters, and breathtaking animation in his films have earned him international renown from critics as well as public recognition within Japan. The Walt Disney Company's commitment to introduce the films to the rest of the world will let more people appreciate the high-quality works he has given the movie-going public.",
+            <br>    "Birth": "1941"
+            <br> }
+          </div>
         </td>
       </tr>
+
       <tr>
         <td> Register as a new user </td>
         <td> /users </td>
         <td> POST </td>
-        <td> A JSON object holding data about the new user, structured like:
-          <br> {
-          <br> name: 'Sean Kopp-Reddy',
-          <br> birthday: '04/02/1992'
-          <br> }
+        <td> A JSON object holding data about the new user; including username, password, email, and birthday- structured like:
+          <div class="red">
+            <br> {
+            <br>    "Username" : "sean",
+            <br>    "Password" : "password",
+            <br>    "Email" : "sean.koppreddy3@gmail.com",
+            <br>    "Birthday" : "1992-04-02"
+            <br> }
+          </div>
         </td>
-        <td> A message confirming your registration as well as a JSON object holding data about the new user, structured like:
-          <br> {
-          <br> name: 'Sean Kopp-Reddy',
-          <br> birthday: '04/02/1992'
-          <br> }
+        <td> A JSON object holding data about the new user, structured the same as input with userID.
         </td>
       </tr>
+
       <tr>
         <td> Update user info </td>
         <td> /users/[name] </td>
         <td> PUT </td>
         <td> None </td>
-        <td> A message confirming that your information has been updated. </td>
+        <td> A JSON object containing the newly updated information about the user, formatted as:
+          <div class="red">
+            <br> {
+            <br>    "_id": "5f51c1f4fe003fbfafb70c12",
+            <br>    "Username" : "sean",
+            <br>    "Password" : "password",
+            <br>    "Email" : "sean.koppreddy3@gmail.com",
+            <br>    "Birthday" : "1992-04-02"
+            <br> }
+          </div>
+        </td>
       </tr>
+
       <tr>
         <td> Add movies to favorite list </td>
-        <td> /users/[name]/favorites </td>
-        <td> PUT </td>
-        <td> A JSON object holding data about the movie to be added, structured like:
-          <br> {
-          <br> title: 'Fight Club',
-          <br> director: 'David Fincher',
-          <br> description: 'An insomniac office worker and a devil-may-care soapmaker form an underground fight club that evolves into something much, much more.'
-          <br> }
+        <td> /users/[Username]/movies/[movieID] </td>
+        <td> POST </td>
+        <td> None </td>
+        <td> A JSON object containing the newly updated information about the user; including FavoriteMovie array, formatted as:
+          <div class="red">
+            <br> {
+            <br>    "_id": "5f51c1f4fe003fbfafb70c12",
+            <br>    "Username" : "sean",
+            <br>    "Password" : "password",
+            <br>    "Email" : "sean.koppreddy3@gmail.com",
+            <br>    "Birthday" : "1992-04-02"
+            <br>    "FavoriteMovies": [
+            <br>       "5f51af7e2de9e3bd754846d7",
+            <br>       "5f51afd72de9e3bd754846d8",
+            <br>       "5f51b0262de9e3bd754846da"
+            <br>     ],
+            <br> }
+          </div>
         </td>
-        <td> A message verifying that the movie has been added to your favorites list. </td>
       </tr>
+
       <tr>
         <td> Remove movies from favorite list </td>
-        <td> /users/[name]/favorites </td>
+        <td> /users/[Username]/movies/[movieID] </td>
         <td> DELETE </td>
         <td> None </td>
-        <td> A message verifying the movie has been removed from your favorites list. </td>
+        <td> A JSON object containing the newly updated information about the user (see above row). </td>
       </tr>
+
       <tr>
         <td>  Deregister user </td>
-        <td> /users </td>
+        <td> /users/[Username] </td>
         <td> DELETE </td>
         <td> None </td>
-        <td> A message verifying that your account has been deleted. </td>
+        <td> A message verifying that your account has been deleted; "[user] has been deleted." </td>
       </tr>
     </table>
   </body>

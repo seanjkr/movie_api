@@ -1,10 +1,18 @@
 const express = require('express'),
   morgan = require('morgan'),
   bodyParser = require('body-parser'),
-  uuid = require('uuid');
+  uuid = require('uuid'),
+  mongoose = require('mongoose'),
+  models = require('./models.js');
 
+const Movies = models.Movie,
+ Users = models.User,
+ Genres = models.Genre,
+ Directors = models.Director;
 
 const app = express();
+
+mongoose.connect('mongodb://localhost:27017/myMoviesDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(morgan('common'));
 
@@ -12,161 +20,169 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
-let movies = [
-  {
-    title: 'Fight Club',
-    director: 'David Fincher',
-    description: 'An insomniac office worker and a devil-may-care soapmaker form an underground fight club that evolves into something much, much more.'
-  },
-  {
-    title: 'Eternal Sunshine of the Spotless Mind',
-    director: 'Michel Gondry',
-    description: 'When their relationship turns sour, a couple undergoes a medical procedure to have each other erased from their memories.'
-  },
-  {
-    title: 'Princess Mononoke',
-    director: 'Hayao Miyazaki',
-    description: 'On a journey to find the cure for a Tatarigami\'s curse, Ashitaka finds himself in the middle of a war between the forest gods and Tatara, a mining colony. In this quest he also meets San, the Mononoke Hime.'
-  },
-  {
-    title: 'Wristcutters: A Love Story',
-    director: 'Goran Dukic',
-    description: 'A film set in a strange afterlife way station that has been reserved for people who have committed suicide.'
-
-  },
-  {
-    title: 'What We Do in the Shadows',
-    director: 'Taika Watiti',
-    description: 'Viago, Deacon and Vladislav are vampires who are finding that modern life has them struggling with the mundane - like paying rent, keeping up with the chore wheel, trying to get into nightclubs and overcoming flatmate conflicts.'
-  },
-  {
-    title: 'Spirited Away',
-    director: 'Hayao Miyazaki',
-    description: 'During her family\'s move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, and where humans are changed into beasts.'
-  },
-  {
-    title: 'Lord of the Rings: The Fellowship of the Ring',
-    director: 'Peter Jackson',
-    description: 'A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.'
-  },
-  {
-    title: 'Lord of the Rings: The Two Towers',
-    director: 'Peter Jackson',
-    description: 'While Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron\'s new ally, Saruman, and his hordes of Isengard.'
-  },
-  {
-    title: 'Lord of the Rings: The Return of the King',
-    director: 'Peter Jackson',
-    description: 'Gandalf and Aragorn lead the World of Men against Sauron\'s army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.'
-  },
-  {
-    title: 'Howl\'s Moving Castle',
-    director: 'Hayao Miyazaki',
-    description: 'When an unconfident young woman is cursed with an old body by a spiteful witch, her only chance of breaking the spell lies with a self-indulgent yet insecure young wizard and his companions in his legged, walking castle.'
-  },
-  {
-    title: 'The Departed',
-    director: 'Martin Scorsese',
-    description: 'An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston.'
-  }
-]
-
-let directors = [
-  {
-    name: 'Hayao Miyazaki'
-  },
-  {
-    name: 'Peter Jackson'
-  },
-  {
-    name: 'Martin Scorsese'
-  },
-  {
-    name: 'Taika Watiti'
-  }
-]
-
-let users = [
-  {
-    name: 'Sean Kopp-Reddy',
-    birthday: '04/02/1992'
-  }
-]
-
-let genres = [
-  {
-    name: 'Action'
-  }
-]
-
 app.get('/movies', (req, res) => {
-  res.json(movies);
+  Movies.find().then((Movies) => {
+    res.status(201).json(Movies);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error:' + err)
+  });
 });
 
 app.get('/movies/:title', (req, res) => {
-  res.json(movies.find((movie) => {
-    return movie.title === req.params.title
-  }));
+  Movies.findOne({Title : req.params.title}).then((Movies) => {
+    res.status(201).json(Movies);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error:' + err)
+  });
+});
+
+app.get('/movies/genre/:name', (req, res) => {
+  Movies.find({'Genre.Name' : req.params.name}).then((Movies) => {
+    res.status(201).json(Movies);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error:' + err)
+  });
+});
+
+app.get('/movies/director/:name', (req, res) => {
+  Movies.find({'Director.Name' : req.params.name}).then((Movies) => {
+    res.status(201).json(Movies);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error:' + err)
+  });
+});
+
+app.get('/genres', (req, res) => {
+  Genres.find().then((Genres) => {
+    res.status(201).json(Genres);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error:' + err)
+  });
+});
+
+app.get('/directors', (req, res) => {
+  Directors.find().then((Directors) => {
+    res.status(201).json(Directors);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error:' + err)
+  });
 });
 
 app.get('/genres/:name', (req, res) => {
-  res.json( genres.find((genre) => {
-    return genre.name === req.params.name
-  }));
+  Genres.findOne({Name : req.params.name}).then((Genres) => {
+    res.status(201).json(Genres);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error:' + err)
+  });
 });
 
 app.get('/directors/:name', (req, res) => {
-  res.json( directors.find((director) => {
-    return director.name === req.params.name
-  }));
+  Directors.findOne({Name : req.params.name}).then((Directors) => {
+    res.status(201).json(Directors);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error:' + err)
+  });
 });
 
 app.post('/users', (req, res) => {
-  let newUser = req.body;
-
-  if(!newUser.name) {
-    const message = 'Missing user name!';
-    res.status(400).send(message);
-  } else {
-    users.push(newUser);
-    res.status(201).send('You have registered!' + newUser);
-  }
+  Users.findOne({ Username: req.body.Username }).then((user) => {
+    if(user) {
+      return res.status(400).send(req.body.Username + 'already exists');
+    } else {
+      Users
+        .create({
+          Username: req.body.Username,
+          Password: req.body.Password,
+          Email: req.body.Email,
+          Birthday: req.body.Birthday
+        })
+        .then((user) => {res.status(201).json(user)})
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        })
+    }
+  })
+  .catch((error) => {
+    console.error(error);
+    res.status(500).send('Error: ' + error);
+  });
 });
 
 app.put('/users/:name', (req, res) => {
-  let user = user.find((user) => { return user.name === req.params.name });
-
-  if (user) {
-    res.status(201).send('Your info has been updated!');
-  } else {
-    res.status(404).send('User was not found.');
-  }
+  Users.findOneAndUpdate({ Username: req.params.name }, {$set:
+    {
+      Username: req.body.Username,
+      Password: req.body.Password,
+      Email: req.body.Email,
+      Birthday: req.body.Birthday
+    }
+  },
+  { new : true},
+  (err, updatedUser) => {
+    if(err) {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    } else {
+      res.json(updatedUser);
+    }
+  });
 });
 
-app.put('/users/:name/favorites', (req, res) => {
-  let user = users.find((user) => { return user.name === req.params.name });
-
-  if (user) {
-    res.status(201).send('This movie has been added to your favorites!');
-  } else {
-    res.status(404).send('User was not found.');
-  }
+app.post('/users/:name/movies/:movieID', (req, res) => {
+  Users.findOneAndUpdate({ Username : req.params.name }, { $push : { FavoriteMovies : req.params.movieID }},
+    { new : true },
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      } else {
+        res.json(updatedUser);
+      }
+  });
 });
 
-app.delete('/users/:name/favorites', (req, res) => {
-  let user = users.find((user) => { return user.name === req.params.name });
-
-  if (user) {
-    res.status(201).send('This movie was deleted from your favorites.');
-  }
+app.delete('/users/:name/movies/:movieID', (req, res) => {
+  Users.findOneAndUpdate({ Username : req.params.name }, { $pull : { FavoriteMovies : req.params.movieID }},
+    { new : true },
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      } else {
+        res.json(updatedUser);
+      }
+  });
 });
 
 app.delete('/users/:name', (req, res) => {
-  let user = users.find((user) => { return user.name === req.params.name });
-
-  if (user) {
-    res.status(201).send('Your account was deleted.');
-  }
+  Users.findOneAndRemove({ Username : req.params.name }).then((user) => {
+    if (!user) {
+      res.status(400).send(req.params.name + ' was not found.');
+    } else {
+      res.status(200).send(req.params.name + ' was deleted.');
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  });
 });
 
 app.use((err, req, res, next) => {
