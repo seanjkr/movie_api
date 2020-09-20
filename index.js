@@ -16,7 +16,11 @@ const Movies = models.Movie,
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/myMoviesDB', { useNewUrlParser: true, useUnifiedTopology: true });
+const port = process.env.PORT || 8080;
+
+// mongoose.connect('mongodb://localhost:27017/myMoviesDB', { useNewUrlParser: true, useUnifiedTopology: true });
+
+mongoose.connect( process.env.Connection_URI, { useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(cors());
 
@@ -179,6 +183,6 @@ app.delete('/users/:name', (req, res) => {
   })
 });
 
-app.listen(8080, () => {
-console.log('My app is listening on port 8008.');
+app.listen(port, '0.0.0.0', () => {
+  console.log('Listening on port ' + port);
 });
