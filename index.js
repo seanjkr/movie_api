@@ -26,7 +26,7 @@ app.use(cors());
 
 app.use(morgan('common'));
 
-app.use("/users/", passport.authenticate('jwt', { session: false }));
+app.use("/users", passport.authenticate('jwt', { session: false }));
 
 app.use(bodyParser.json());
 
@@ -87,7 +87,7 @@ app.get('/directors/:name', (req, res) => {
   })
 });
 
-app.post('/users', [
+app.post('/register', [
   check('Username', 'A Username of at least 4 characters in length is required.').isLength({min: 4}),
   check('Username', 'Username can only include letters and numbers.').isAlphanumeric(),
   check('Password', 'Password is required.').not().isEmpty(),
@@ -186,3 +186,8 @@ app.delete('/users/:name', (req, res) => {
 app.listen(port, '0.0.0.0', () => {
   console.log('Listening on port ' + port);
 });
+
+
+/* app.listen(8080, () => {
+  console.log('My app is listening on port 8080.');
+}); */
