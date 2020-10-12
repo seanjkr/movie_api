@@ -1,5 +1,30 @@
+.movie-card-col {
+  padding-bottom: 3rem;
+}
+.movie-poster {
+  width: 15rem;
+  float: left;
+  margin-right: 1rem;
+}
+@media (max-width: 767px) {
+  .movie-poster {
+    float: none;
+  }
+}
+
+.label {
+  font-weight: 600;
+}
 .movie-app {
   color: steelblue;
+}
+
+.app-container {
+  padding-top: 8rem;
+}
+
+.navbar {
+  min-height: 70px;
 }
 
 /*# sourceMappingURL=/src.78399e21.css.map */

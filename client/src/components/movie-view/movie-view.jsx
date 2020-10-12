@@ -1,4 +1,9 @@
 import React from 'react';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import MovieViewCSS from './movie-view.scss';
+
 
 export class MovieView extends React.Component {
    constructor() {
@@ -13,33 +18,41 @@ export class MovieView extends React.Component {
       if ( !movie ) return null;
 
       return (
-         <div className = "movie-view" > 
 
-            <img className = "movie-poster" src = {movie.ImagePath} />
+         <Col md ={9} className = "movie-info">
 
-            <div className = "movie-title">
-               <span className = "label"> Title: </span>
-               <span className = "value"> { movie.Title } </span>
-            </div>
+            <img className = "movie-poster" src = { movie.ImagePath } />
 
-            <div className = "movie-description">
-               <span className = "label"> Description: </span>
-               <span className = "value"> { movie.Description } </span>
-            </div>
+            <Card className = "text-center movie-view-card bg-light"> 
 
-            <div className = "movie-genre">
-               <span className = "label"> Genre: </span>
-               <span className = "value"> { movie.Genre.Name } </span>
-            </div>
+               <Card.Header>
+                  <span className = "movie-title"> <h2> { movie.Title } </h2> </span>
+               </Card.Header>
 
-            <div className = "movie-director">
-               <span className = "label"> Director: </span>
-               <span className = "value"> { movie.Director.Name } </span>
-            </div>
+               <Card.Body>
 
-            <button className = "back-button" onClick = { () => back( movie ) } > Back </button>
+                  <Card.Text className = "movie-description">
+                     <span className = "label"> Description: </span>
+                     <span className = "value"> { movie.Description } </span>
+                  </Card.Text>
 
-         </div>
+                  <Card.Text className = "movie-genre">
+                     <span className = "label"> Genre: </span>
+                     <Button variant = "link"> { movie.Genre.Name } </Button>
+                  </Card.Text>
+
+                  <Card.Text className = "movie-director">
+                     <span className = "label"> Director: </span>
+                     <Button variant = "link"> { movie.Director.Name } </Button>
+                  </Card.Text>
+
+                  <Button className = "back-button primary" onClick = { () => back( movie ) } > Back </Button>
+
+               </Card.Body>
+
+            </Card>
+
+         </Col>
 
       );
    }
