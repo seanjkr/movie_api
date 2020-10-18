@@ -5,20 +5,28 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export function LoginView( props ) {
   const [ username , setUsername ] = useState( '' );
   const [ password , setPassword ] = useState( '' );
   const newUser = 'New User';
 
-  const handleSubmit = () => {
-    console.log( username , password );
-    props.onLoggedIn( username )
-  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const registerUser = () => {
-    console.log( newUser );
-    props.registerNewUser( newUser );
+    axios.post('https://seans-movie-api.herokuapp.com/login', {
+      Username: username,
+      Password: password
+    })
+    .then(response => {
+      const data = response.data;
+      props.onLoggedIn(data);
+    })
+    .catch( e => {
+      console.log('user not found - try again')
+    });
   };
 
   return (
@@ -53,9 +61,11 @@ export function LoginView( props ) {
                   Submit
                 </Button>
 
-                <a className = "passwordReset" href = "#"> Forgot Password? </a>
-
               </Form>
+
+              <a className = "passwordReset" href = "#"> Forgot Password? </a>
+
+              <a className = "register-new" href = "/register"> Register? </a>
 
             </Card.Body>
 

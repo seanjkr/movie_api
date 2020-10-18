@@ -70,7 +70,7 @@ export function RegistrationView( props ) {
 
               </Form>
 
-              <a href ="#" onClick = { goToLogin } > Already have an account? Sign in! </a>
+              <a href ="/login"> Sign in! </a>
 
             </Card.Body>
           
