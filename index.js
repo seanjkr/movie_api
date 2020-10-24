@@ -117,8 +117,12 @@ app.post('/register', [
 });
 
 app.get('/users/:name', (req, res) => {
-  Users.findOne({Username : req.params.name}).then((Users) => {
-    res.status(201).json(Users);
+  Users.findOne({Username : req.params.name}).then((user) => {
+    if (!user) {
+      res.status(400).send(req.params.name + ' was not found.');
+    } else {
+      res.status(201).json(user);
+    }
   })
 });
 
