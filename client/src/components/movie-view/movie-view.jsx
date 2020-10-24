@@ -2,7 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import MovieViewCSS from './movie-view.scss';
+import './movie-view.scss';
 import { Link } from "react-router-dom";
 
 
@@ -14,7 +14,7 @@ export class MovieView extends React.Component {
    }
 
    render() {
-      const { movie , back } = this.props;
+      const { movie } = this.props;
 
       if ( !movie ) return null;
 

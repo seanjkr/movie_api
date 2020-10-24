@@ -3,7 +3,10 @@ import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import MainViewCSS from './main-view.scss';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Nav from 'react-bootstrap/Nav';
+import './main-view.scss';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { LoginView } from '../login-view/login-view';
@@ -12,6 +15,7 @@ import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
+import { UserView } from '../user-view/user-view';
 
 
 export class MainView extends React.Component {
@@ -19,8 +23,7 @@ export class MainView extends React.Component {
         super();
 
         this.state = {
-            movies : null,
-            selectedMovie : null,
+            movies : [],
             user : null,
         };
     }
@@ -54,36 +57,135 @@ export class MainView extends React.Component {
 
         localStorage.setItem( 'token' , authData.token );
         localStorage.setItem( 'user' , authData.user.Username );
+        localStorage.setItem( 'email' , authData.user.Email);
+        localStorage.setItem( 'birthday' , authData.user.Birthday);
+        window.open( '/' , '_self' );
     }
 
     render() {
-        const { movies , selectedMovie , user } = this.state;
+        const { movies , user } = this.state;
 
         if ( !user ) return ( 
             <Router>
 
-                <Route exact path = "/" render = { () => {
-                    return <LoginView onLoggedIn = { user => this.onLoggedIn( user )} />
-                }}/>
+                <Container fluid className = "everything">
 
-                <Route exact path = "/login" render = { () => {
-                    return <LoginView onLoggedIn = { user => this.onLoggedIn( user )} />
-                }}/>
+                    <Navbar variant = "dark" fixed = "top" className = " bg-dark navbar">
 
-                <Route exact path = "/register" render = { () => {
-                    return <RegistrationView/>
-                }}/>
+                        <Navbar.Brand href="/"> My Movies! </Navbar.Brand>
 
-            </Router> );
+                        <Navbar.Collapse className = "justify-content-end">
+
+                            <Navbar.Text className = "navbar-text">
+                                <a href = "/login"> Login </a>
+                                / 
+                                <a href = "/register"> Register </a>
+                            </Navbar.Text>
+
+                        </Navbar.Collapse>
+
+                    </Navbar>
+
+                    <div className = "main-view">
+
+                        <Route exact path = "/" render = { () => {
+                            return <LoginView onLoggedIn = { user => this.onLoggedIn( user )} />
+                        }}/>
+
+                        <Route exact path = "/login" render = { () => {
+                            return <LoginView onLoggedIn = { user => this.onLoggedIn( user )} />
+                        }}/>
+
+                        <Route exact path = "/register" render = { () => {
+                            return <RegistrationView/>
+                        }}/>
+
+                        <Route path = "/movies" render = { () => {
+                            return <LoginView onLoggedIn = { user => this.onLoggedIn( user )} />
+                        }}/>
+
+                        <Route path = "/genres" render = { () => {
+                            return <LoginView onLoggedIn = { user => this.onLoggedIn( user )} />
+                        }}/>
+
+                        <Route path = "/directors" render = { () => {
+                            return <LoginView onLoggedIn = { user => this.onLoggedIn( user )} />
+                        }}/>
+
+                        <Route path = "/users" render = { () => {
+                            return <LoginView onLoggedIn = { user => this.onLoggedIn( user )} />
+                        }}/>
+
+
+                    </div>
+                
+                </Container>
+
+            </Router> 
+        );
     
-        if ( !movies ) return <div className="main-view"/>;
+        if ( !movies ) return ( 
+            <Router>
+
+                <Container fluid className = "everything">
+
+                    <Navbar variant = "dark" fixed = "top" className = "bg-dark navbar">
+
+                        <Navbar.Brand href="/"> My Movies! </Navbar.Brand>
+
+                        <Navbar.Collapse className = "justify-content-end">
+
+                            <Nav>
+
+                                <NavDropdown alignRight title = "User">
+                                    <NavDropdown.Item href = "/users"> Profile </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item  onSelect = { localStorage.clear() } href = "/" > Logout  </NavDropdown.Item>
+                                </NavDropdown>
+
+                            </Nav>
+
+                        </Navbar.Collapse>
+
+                    </Navbar>
+
+                    <Route path = "/" render = { () => {
+                        return <div className="main-view"/>
+                    }}/>
+
+                </Container>
+
+            </Router> 
+            
+        );
+
 
         return (
             <Router>
 
-                <Container fluid className = "main-view">
+                <Container fluid className = "everything">
 
-                    <Row className = "justify-content-center">
+                    <Navbar variant = "dark" fixed = "top" className = "bg-dark navbar">
+
+                        <Navbar.Brand href="/"> My Movies! </Navbar.Brand>
+
+                        <Navbar.Collapse className = "justify-content-end">
+
+                            <Nav>
+
+                                <NavDropdown alignRight title = "Do Stuff" >
+                                    <NavDropdown.Item href = "/users"> Profile </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item href = "/" > Logout  </NavDropdown.Item>
+                                </NavDropdown>
+                            
+                            </Nav>
+
+                        </Navbar.Collapse>
+
+                    </Navbar>
+
+                    <Row className = "justify-content-center main-view">
 
                         <Route exact path = "/" render = { () => movies.map( m => 
                             <Col sm = {6} lg = {4}  xl = {3} className = "movie-card-col">
@@ -91,8 +193,8 @@ export class MainView extends React.Component {
                             </Col>
                         )}/>
 
-                        <Route exact path = "/movies/:movieId" render = {({ match }) => 
-                            <MovieView movie = { movies.find( m => m._id === match.params.movieId )}/>
+                        <Route exact path = "/movies/:movieId" render = { ( { match } ) => {
+                            return <MovieView movie = { movies.find( m => m._id === match.params.movieId ) }/> }
                         }/>
 
                         <Route exact path = "/genres/:name" render = { ( { match } ) => {
@@ -100,9 +202,17 @@ export class MainView extends React.Component {
                             return <GenreView genre = { movies.find( m => m.Genre.Name === match.params.name).Genre }/> }
                         }/>
 
-                        <Route exact path = "/directors/:name" render = { ( { match }) =>{
+                        <Route exact path = "/directors/:name" render = { ( { match }) => {
                             if (!movies ) return <div className = "main-view"/>;
                             return <DirectorView director = { movies.find( m => m.Director.Name === match.params.name).Director }/> } 
+                        }/>
+
+                        <Route exact path = "/users" render = { () => {
+                            return <UserView movies = { movies }/> }
+                        }/>
+
+                        <Route exact path = "users/update" render = { () => {
+                            return <div className="main-view"> <p> Thanks! Your info has been updated! </p> </div> }
                         }/>
 
                     </Row>

@@ -2,7 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import GenreViewCSS from './genre-view.scss';
+import './genre-view.scss';
 import { Link } from 'react-router-dom';
 
 

@@ -2,7 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import DirectorViewCSS from './director-view.scss';
+import './director-view.scss';
 import { Link } from 'react-router-dom';
 
 

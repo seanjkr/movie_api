@@ -5,6 +5,8 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import axios from 'axios';
+
 
 export function RegistrationView( props ) {
   const [ email , setEmail ] = useState( '' );
@@ -12,22 +14,27 @@ export function RegistrationView( props ) {
   const [ password , setPassword ] = useState( '' );
   const [ birthday , setBirthday ] = useState( '' );
 
-  const signedUp = () => {
+  const signedUp = (e) => {
     e.preventDefault();
-    console.log( username , password , email , birthday );
-    props.signIn( username )
+
+    axios.post( 'https://seans-movie-api.herokuapp.com/register' , {
+      Username : username,
+      Password : password,
+      Email : email,
+      Birthday : birthday
+    })
+    .then( response => {
+      const data = response.data;
+      console.log( data );
+      window.open( '/' , '_self' );
+    })
+    .catch( e => {
+      console.log( 'error registering user')
+    });
   };
-
-  const goToLogin = () => {
-    e.preventDefault();
-    
-  }
-
-
 
   return (
     <Container fluid>
-
 
       <Row className = "justify-content-center">
 
@@ -51,11 +58,6 @@ export function RegistrationView( props ) {
 
                 <Form.Group> 
                   <Form.Label> Password </Form.Label>
-                  <Form.Control type = "password" placeholder = "Password" value = { password } onChange = { e => setPassword( e.target.value )} />
-                </Form.Group>
-
-                <Form.Group> 
-                  <Form.Label> Re-Enter Password </Form.Label>
                   <Form.Control type = "password" placeholder = "Password" value = { password } onChange = { e => setPassword( e.target.value )} />
                 </Form.Group>
 

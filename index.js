@@ -116,6 +116,12 @@ app.post('/register', [
   })
 });
 
+app.get('/users/:name', (req, res) => {
+  Users.findOne({Username : req.params.name}).then((Users) => {
+    res.status(201).json(Users);
+  })
+});
+
 app.put('/users/:name', [
   check('Username', 'A Username of at least 4 characters in length is required.').isLength({min: 4}),
   check('Username', 'Username can only include letters and numbers.').isAlphanumeric(),

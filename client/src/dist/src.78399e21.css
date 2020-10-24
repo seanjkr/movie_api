@@ -1,6 +1,21 @@
 .movie-card-col {
   padding-bottom: 3rem;
 }
+
+.everything {
+  width: 100vw;
+}
+
+.main-view {
+  padding-top: 8rem;
+}
+
+.navbar {
+  min-height: 70px;
+}
+.login-card {
+  width: 20rems;
+}
 .movie-poster {
   width: 15rem;
   float: left;
@@ -17,14 +32,6 @@
 }
 .movie-app {
   color: steelblue;
-}
-
-.app-container {
-  padding-top: 8rem;
-}
-
-.navbar {
-  min-height: 70px;
 }
 
 /*# sourceMappingURL=/src.78399e21.css.map */
