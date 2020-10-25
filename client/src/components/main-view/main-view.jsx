@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Nav from 'react-bootstrap/Nav';
+import Button from 'react-bootstrap/Button';
 import './main-view.scss';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
@@ -16,6 +17,7 @@ import { MovieView } from '../movie-view/movie-view';
 import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
 import { UserView } from '../user-view/user-view';
+import { UpdateView } from '../user-update-view/user-update-view';
 
 
 export class MainView extends React.Component {
@@ -137,7 +139,7 @@ export class MainView extends React.Component {
 
                             <Nav>
 
-                                <NavDropdown alignRight title = "User">
+                                <NavDropdown alignRight title = "Do Stuff" >
                                     <NavDropdown.Item href = "/users"> Profile </NavDropdown.Item>
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item  onSelect = { localStorage.clear() } href = "/" > Logout  </NavDropdown.Item>
@@ -174,9 +176,17 @@ export class MainView extends React.Component {
                             <Nav>
 
                                 <NavDropdown alignRight title = "Do Stuff" >
-                                    <NavDropdown.Item href = "/users"> Profile </NavDropdown.Item>
+
+                                    <NavDropdown.Item href = "/users"> 
+                                        <Button variant = "light" > Profile </Button> 
+                                    </NavDropdown.Item>
+
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item href = "/" > Logout  </NavDropdown.Item>
+
+                                    <NavDropdown.Item href = "/" >
+                                        <Button variant = "light"> Logout </Button>
+                                    </NavDropdown.Item>
+
                                 </NavDropdown>
                             
                             </Nav>
@@ -209,10 +219,6 @@ export class MainView extends React.Component {
 
                         <Route exact path = "/users" render = { () => {
                             return <UserView movies = { movies }/> }
-                        }/>
-
-                        <Route exact path = "users/update" render = { () => {
-                            return <div className="main-view"> <p> Thanks! Your info has been updated! </p> </div> }
                         }/>
 
                     </Row>

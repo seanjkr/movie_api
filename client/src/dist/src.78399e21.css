@@ -30,6 +30,9 @@
 .label {
   font-weight: 600;
 }
+.user-card {
+  margin-bottom: 20px;
+}
 .movie-app {
   color: steelblue;
 }

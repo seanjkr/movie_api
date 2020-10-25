@@ -42885,8 +42885,6 @@ function LoginView(props) {
       password = _useState4[0],
       setPassword = _useState4[1];
 
-  var newUser = 'New User';
-
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
 
@@ -43473,7 +43471,182 @@ var DirectorView = /*#__PURE__*/function (_React$Component) {
 }(_react.default.Component);
 
 exports.DirectorView = DirectorView;
-},{"react":"../node_modules/react/index.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","./director-view.scss":"components/director-view/director-view.scss","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/user-view/user-view.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","./director-view.scss":"components/director-view/director-view.scss","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"../node_modules/react-bootstrap/esm/AccordionContext.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var context = _react.default.createContext(null);
+
+context.displayName = 'AccordionContext';
+var _default = context;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"../node_modules/react-bootstrap/esm/AccordionToggle.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.useAccordionToggle = useAccordionToggle;
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/extends"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _SelectableContext = _interopRequireDefault(require("./SelectableContext"));
+
+var _AccordionContext = _interopRequireDefault(require("./AccordionContext"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function useAccordionToggle(eventKey, onClick) {
+  var contextEventKey = (0, _react.useContext)(_AccordionContext.default);
+  var onSelect = (0, _react.useContext)(_SelectableContext.default);
+  return function (e) {
+    /*
+      Compare the event key in context with the given event key.
+      If they are the same, then collapse the component.
+    */
+    var eventKeyPassed = eventKey === contextEventKey ? null : eventKey;
+    if (onSelect) onSelect(eventKeyPassed, e);
+    if (onClick) onClick(e);
+  };
+}
+
+var AccordionToggle = _react.default.forwardRef(function (_ref, ref) {
+  var _ref$as = _ref.as,
+      Component = _ref$as === void 0 ? 'button' : _ref$as,
+      children = _ref.children,
+      eventKey = _ref.eventKey,
+      onClick = _ref.onClick,
+      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["as", "children", "eventKey", "onClick"]);
+  var accordionOnClick = useAccordionToggle(eventKey, onClick);
+
+  if (Component === 'button') {
+    props.type = 'button';
+  }
+
+  return /*#__PURE__*/_react.default.createElement(Component, (0, _extends2.default)({
+    ref: ref,
+    onClick: accordionOnClick
+  }, props), children);
+});
+
+var _default = AccordionToggle;
+exports.default = _default;
+},{"@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","react":"../node_modules/react/index.js","./SelectableContext":"../node_modules/react-bootstrap/esm/SelectableContext.js","./AccordionContext":"../node_modules/react-bootstrap/esm/AccordionContext.js"}],"../node_modules/react-bootstrap/esm/AccordionCollapse.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/extends"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _Collapse = _interopRequireDefault(require("./Collapse"));
+
+var _AccordionContext = _interopRequireDefault(require("./AccordionContext"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var AccordionCollapse = _react.default.forwardRef(function (_ref, ref) {
+  var children = _ref.children,
+      eventKey = _ref.eventKey,
+      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["children", "eventKey"]);
+  var contextEventKey = (0, _react.useContext)(_AccordionContext.default);
+  return /*#__PURE__*/_react.default.createElement(_Collapse.default, (0, _extends2.default)({
+    ref: ref,
+    in: contextEventKey === eventKey
+  }, props), /*#__PURE__*/_react.default.createElement("div", null, _react.default.Children.only(children)));
+});
+
+AccordionCollapse.displayName = 'AccordionCollapse';
+var _default = AccordionCollapse;
+exports.default = _default;
+},{"@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","react":"../node_modules/react/index.js","./Collapse":"../node_modules/react-bootstrap/esm/Collapse.js","./AccordionContext":"../node_modules/react-bootstrap/esm/AccordionContext.js"}],"../node_modules/react-bootstrap/esm/Accordion.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/extends"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose"));
+
+var _classnames = _interopRequireDefault(require("classnames"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _uncontrollable = require("uncontrollable");
+
+var _ThemeProvider = require("./ThemeProvider");
+
+var _AccordionToggle = _interopRequireDefault(require("./AccordionToggle"));
+
+var _SelectableContext = _interopRequireDefault(require("./SelectableContext"));
+
+var _AccordionCollapse = _interopRequireDefault(require("./AccordionCollapse"));
+
+var _AccordionContext = _interopRequireDefault(require("./AccordionContext"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Accordion = _react.default.forwardRef(function (props, ref) {
+  var _useUncontrolled = (0, _uncontrollable.useUncontrolled)(props, {
+    activeKey: 'onSelect'
+  }),
+      _useUncontrolled$as = _useUncontrolled.as,
+      Component = _useUncontrolled$as === void 0 ? 'div' : _useUncontrolled$as,
+      activeKey = _useUncontrolled.activeKey,
+      bsPrefix = _useUncontrolled.bsPrefix,
+      children = _useUncontrolled.children,
+      className = _useUncontrolled.className,
+      onSelect = _useUncontrolled.onSelect,
+      controlledProps = (0, _objectWithoutPropertiesLoose2.default)(_useUncontrolled, ["as", "activeKey", "bsPrefix", "children", "className", "onSelect"]);
+
+  var finalClassName = (0, _classnames.default)(className, (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'accordion'));
+  return /*#__PURE__*/_react.default.createElement(_AccordionContext.default.Provider, {
+    value: activeKey || null
+  }, /*#__PURE__*/_react.default.createElement(_SelectableContext.default.Provider, {
+    value: onSelect || null
+  }, /*#__PURE__*/_react.default.createElement(Component, (0, _extends2.default)({
+    ref: ref
+  }, controlledProps, {
+    className: finalClassName
+  }), children)));
+});
+
+Accordion.displayName = 'Accordion';
+Accordion.Toggle = _AccordionToggle.default;
+Accordion.Collapse = _AccordionCollapse.default;
+var _default = Accordion;
+exports.default = _default;
+},{"@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","classnames":"../node_modules/classnames/index.js","react":"../node_modules/react/index.js","uncontrollable":"../node_modules/uncontrollable/esm/index.js","./ThemeProvider":"../node_modules/react-bootstrap/esm/ThemeProvider.js","./AccordionToggle":"../node_modules/react-bootstrap/esm/AccordionToggle.js","./SelectableContext":"../node_modules/react-bootstrap/esm/SelectableContext.js","./AccordionCollapse":"../node_modules/react-bootstrap/esm/AccordionCollapse.js","./AccordionContext":"../node_modules/react-bootstrap/esm/AccordionContext.js"}],"components/user-view/user-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -43501,6 +43674,10 @@ var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
 var _Row = _interopRequireDefault(require("react-bootstrap/Row"));
 
 var _Col = _interopRequireDefault(require("react-bootstrap/Col"));
+
+var _Accordion = _interopRequireDefault(require("react-bootstrap/Accordion"));
+
+var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
 
 require("./user-view.scss");
 
@@ -43552,8 +43729,8 @@ var UserView = /*#__PURE__*/function (_React$Component) {
   _createClass(UserView, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var accessToken = localStorage.getItem('token');
-      this.getUser(accessToken);
+      var token = localStorage.getItem('token');
+      this.getUser(token);
     }
   }, {
     key: "getUser",
@@ -43564,7 +43741,7 @@ var UserView = /*#__PURE__*/function (_React$Component) {
 
       _axios.default.get("https://seans-movie-api.herokuapp.com/users/".concat(Username), {
         headers: {
-          Authorization: "Bearer $(token)"
+          Authorization: "Bearer ".concat(token)
         }
       }).then(function (res) {
         _this2.setState({
@@ -43578,13 +43755,32 @@ var UserView = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "deleteAccount",
+    value: function deleteAccount(token) {
+      var _this3 = this;
+
+      var Username = localStorage.getItem('user');
+
+      _axios.default.delete("https://seans-movie-api.herokuapp.com/users/".concat(Username), {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).then(function (res) {
+        _this3.setState({
+          user: null
+        });
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var movies = this.props.movies;
       var FavoriteList = movies.filter(function (movie) {
-        return _this3.state.FavoriteMovies.includes(movie._id);
+        return _this4.state.FavoriteMovies.includes(movie._id);
       });
       return _react.default.createElement(_Container.default, {
         fluid: true
@@ -43593,7 +43789,9 @@ var UserView = /*#__PURE__*/function (_React$Component) {
       }, _react.default.createElement(_Col.default, {
         lg: 10,
         xl: 9
-      }, _react.default.createElement("h2", null, " Your info! "), _react.default.createElement(_Card.default, null, _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_Card.default.Text, null, " ", _react.default.createElement("span", {
+      }, _react.default.createElement("h2", null, " Your info! "), _react.default.createElement(_Card.default, {
+        className: "bg-light user-card"
+      }, _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_Card.default.Text, null, " ", _react.default.createElement("span", {
         className: "label"
       }, " Username : "), " ", this.state.Username, " "), _react.default.createElement(_Card.default.Text, null, " ", _react.default.createElement("span", {
         className: "label"
@@ -43609,16 +43807,40 @@ var UserView = /*#__PURE__*/function (_React$Component) {
         }, " ", movie.Title, " "), _react.default.createElement(_Button.default, {
           className: "remove-favorite",
           onClick: function onClick() {
-            return _this3.removeFavoriteMovie(movie._id);
+            return _this4.removeFavoriteMovie(movie._id);
           }
         }, "Remove from Favorites"));
-      })), _react.default.createElement(_Card.default.Text, null, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/users/update"
-      }, " Update Information ")), _react.default.createElement(_Card.default.Text, null, _react.default.createElement(_Button.default, {
+      })))), _react.default.createElement(_Accordion.default, null, _react.default.createElement(_Card.default, {
+        className: "bg-light user-card"
+      }, _react.default.createElement(_Card.default.Header, null, _react.default.createElement(_Accordion.default.Toggle, {
+        as: _Button.default,
+        variant: "link",
+        eventKey: "0"
+      }, "Update Info")), _react.default.createElement(_Accordion.default.Collapse, {
+        eventKey: "0"
+      }, _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_Form.default, null, _react.default.createElement(_Form.default.Group, {
+        controlId: "formBasicEmail"
+      }, _react.default.createElement(_Form.default.Label, null, " Email Address "), _react.default.createElement(_Form.default.Control, {
+        type: "email",
+        placeholder: "Enter email"
+      })), _react.default.createElement(_Form.default.Group, {
+        controlId: "formBasicUsername"
+      }, _react.default.createElement(_Form.default.Label, null, " Username "), _react.default.createElement(_Form.default.Control, {
+        type: "text",
+        placeholder: "Choose Username"
+      })), _react.default.createElement(_Form.default.Group, null, _react.default.createElement(_Form.default.Label, null, " Password "), _react.default.createElement(_Form.default.Control, {
+        type: "password",
+        placeholder: "Password"
+      })), _react.default.createElement(_Form.default.Group, null, _react.default.createElement(_Form.default.Label, null, " Birthday "), _react.default.createElement(_Form.default.Control, {
+        type: "date"
+      })), _react.default.createElement(_Button.default, {
+        variant: "primary",
+        type: "submit"
+      }, "Submit")))))), _react.default.createElement(_Button.default, {
         onClick: function onClick() {
-          return _this3.deleteAccount();
+          return _this4.deleteAccount(localStorage.getItem('token'));
         }
-      }, " Delete Profile ")))), _react.default.createElement(_reactRouterDom.Link, {
+      }, " Delete Profile "), _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         variant: "link"
@@ -43630,7 +43852,9 @@ var UserView = /*#__PURE__*/function (_React$Component) {
 }(_react.default.Component);
 
 exports.UserView = UserView;
-},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","./user-view.scss":"components/user-view/user-view.scss"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","react-bootstrap/Accordion":"../node_modules/react-bootstrap/esm/Accordion.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","./user-view.scss":"components/user-view/user-view.scss"}],"components/user-update-view/user-update-view.jsx":[function(require,module,exports) {
+
+},{}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -43654,6 +43878,8 @@ var _NavDropdown = _interopRequireDefault(require("react-bootstrap/NavDropdown")
 
 var _Nav = _interopRequireDefault(require("react-bootstrap/Nav"));
 
+var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
+
 require("./main-view.scss");
 
 var _reactRouterDom = require("react-router-dom");
@@ -43671,6 +43897,8 @@ var _genreView = require("../genre-view/genre-view");
 var _directorView = require("../director-view/director-view");
 
 var _userView = require("../user-view/user-view");
+
+var _userUpdateView = require("../user-update-view/user-update-view");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -43855,7 +44083,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         className: "justify-content-end"
       }, _react.default.createElement(_Nav.default, null, _react.default.createElement(_NavDropdown.default, {
         alignRight: true,
-        title: "User"
+        title: "Do Stuff"
       }, _react.default.createElement(_NavDropdown.default.Item, {
         href: "/users"
       }, " Profile "), _react.default.createElement(_NavDropdown.default.Divider, null), _react.default.createElement(_NavDropdown.default.Item, {
@@ -43885,9 +44113,13 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         title: "Do Stuff"
       }, _react.default.createElement(_NavDropdown.default.Item, {
         href: "/users"
-      }, " Profile "), _react.default.createElement(_NavDropdown.default.Divider, null), _react.default.createElement(_NavDropdown.default.Item, {
+      }, _react.default.createElement(_Button.default, {
+        variant: "light"
+      }, " Profile ")), _react.default.createElement(_NavDropdown.default.Divider, null), _react.default.createElement(_NavDropdown.default.Item, {
         href: "/"
-      }, " Logout  "))))), _react.default.createElement(_Row.default, {
+      }, _react.default.createElement(_Button.default, {
+        variant: "light"
+      }, " Logout ")))))), _react.default.createElement(_Row.default, {
         className: "justify-content-center main-view"
       }, _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
@@ -43952,14 +44184,6 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             movies: movies
           });
         }
-      }), _react.default.createElement(_reactRouterDom.Route, {
-        exact: true,
-        path: "users/update",
-        render: function render() {
-          return _react.default.createElement("div", {
-            className: "main-view"
-          }, " ", _react.default.createElement("p", null, " Thanks! Your info has been updated! "), " ");
-        }
       }))));
     }
   }]);
@@ -43968,7 +44192,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 }(_react.default.Component);
 
 exports.MainView = MainView;
-},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","react-bootstrap/Navbar":"../node_modules/react-bootstrap/esm/Navbar.js","react-bootstrap/NavDropdown":"../node_modules/react-bootstrap/esm/NavDropdown.js","react-bootstrap/Nav":"../node_modules/react-bootstrap/esm/Nav.js","./main-view.scss":"components/main-view/main-view.scss","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../login-view/login-view":"components/login-view/login-view.jsx","../registration-view/registration-view":"components/registration-view/registration-view.jsx","../movie-card/movie-card":"components/movie-card/movie-card.jsx","../movie-view/movie-view":"components/movie-view/movie-view.jsx","../genre-view/genre-view":"components/genre-view/genre-view.jsx","../director-view/director-view":"components/director-view/director-view.jsx","../user-view/user-view":"components/user-view/user-view.jsx"}],"index.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","react-bootstrap/Navbar":"../node_modules/react-bootstrap/esm/Navbar.js","react-bootstrap/NavDropdown":"../node_modules/react-bootstrap/esm/NavDropdown.js","react-bootstrap/Nav":"../node_modules/react-bootstrap/esm/Nav.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","./main-view.scss":"components/main-view/main-view.scss","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../login-view/login-view":"components/login-view/login-view.jsx","../registration-view/registration-view":"components/registration-view/registration-view.jsx","../movie-card/movie-card":"components/movie-card/movie-card.jsx","../movie-view/movie-view":"components/movie-view/movie-view.jsx","../genre-view/genre-view":"components/genre-view/genre-view.jsx","../director-view/director-view":"components/director-view/director-view.jsx","../user-view/user-view":"components/user-view/user-view.jsx","../user-update-view/user-update-view":"components/user-update-view/user-update-view.jsx"}],"index.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -44060,7 +44284,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49953" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58490" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
