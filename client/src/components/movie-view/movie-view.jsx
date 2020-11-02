@@ -13,6 +13,21 @@ export class MovieView extends React.Component {
       this.state = {};
    }
 
+   addFavorite( movie ) {
+      const Username = localStorage.getItem( 'user' );
+      const Token = localStorage.getItem( 'token' );
+  
+      axios.post( `https://seans-movie-api.herokuapp.com/users/${Username}/movies/${movie._id}` , {
+        headers : { Authorization : `Bearer ${Token}`}
+      })
+      .then(( res ) => {
+        window.open( '/users' , '_self' );
+      })
+      .catch( function( err ) {
+        console.log( err );
+      })
+    }
+
    render() {
       const { movie } = this.props;
 
@@ -54,6 +69,8 @@ export class MovieView extends React.Component {
                   <Link to = { '/' }>
                      <Button className = "back-button primary"> Back </Button>
                   </Link>
+
+                  <Button variant = "link" onClick = {() => addFavorite( movie ) } > Add to Favorites </Button>
 
                </Card.Body>
 

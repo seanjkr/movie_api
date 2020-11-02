@@ -4,8 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import Nav from 'react-bootstrap/Nav';
+import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import './main-view.scss';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -17,7 +16,6 @@ import { MovieView } from '../movie-view/movie-view';
 import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
 import { UserView } from '../user-view/user-view';
-import { UpdateView } from '../user-update-view/user-update-view';
 
 
 export class MainView extends React.Component {
@@ -59,8 +57,6 @@ export class MainView extends React.Component {
 
         localStorage.setItem( 'token' , authData.token );
         localStorage.setItem( 'user' , authData.user.Username );
-        localStorage.setItem( 'email' , authData.user.Email);
-        localStorage.setItem( 'birthday' , authData.user.Birthday);
         window.open( '/' , '_self' );
     }
 
@@ -137,15 +133,27 @@ export class MainView extends React.Component {
 
                         <Navbar.Collapse className = "justify-content-end">
 
-                            <Nav>
+                            <Dropdown alignRight>
 
-                                <NavDropdown alignRight title = "Do Stuff" >
-                                    <NavDropdown.Item href = "/users"> Profile </NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item  onSelect = { localStorage.clear() } href = "/" > Logout  </NavDropdown.Item>
-                                </NavDropdown>
+                                <Dropdown.Toggle className = "bg-dark nav-dropdown">
+                                    Do stuff
+                                </Dropdown.Toggle>
 
-                            </Nav>
+                                <Dropdown.Menu>
+
+                                    <Dropdown.Item href = "/users"> 
+                                        Profile
+                                    </Dropdown.Item>
+
+                                    <Dropdown.Divider />
+
+                                    <Dropdown.Item href = "/">
+                                        <div onClick = { () => localStorage.clear() } > Logout </div>
+                                    </Dropdown.Item>
+
+                                </Dropdown.Menu>
+
+                            </Dropdown>
 
                         </Navbar.Collapse>
 
@@ -173,23 +181,27 @@ export class MainView extends React.Component {
 
                         <Navbar.Collapse className = "justify-content-end">
 
-                            <Nav>
+                            <Dropdown alignRight>
 
-                                <NavDropdown alignRight title = "Do Stuff" >
+                                <Dropdown.Toggle className = "bg-dark nav-dropdown">
+                                    Do stuff
+                                </Dropdown.Toggle>
 
-                                    <NavDropdown.Item href = "/users"> 
-                                        <Button variant = "light" > Profile </Button> 
-                                    </NavDropdown.Item>
+                                <Dropdown.Menu>
 
-                                    <NavDropdown.Divider />
+                                    <Dropdown.Item href = "/users"> 
+                                        Profile
+                                    </Dropdown.Item>
 
-                                    <NavDropdown.Item href = "/" >
-                                        <Button variant = "light"> Logout </Button>
-                                    </NavDropdown.Item>
+                                    <Dropdown.Divider />
 
-                                </NavDropdown>
-                            
-                            </Nav>
+                                    <Dropdown.Item href = "/" >
+                                        <div onClick = { () => localStorage.clear() } > Logout </div>
+                                    </Dropdown.Item>
+
+                                </Dropdown.Menu>
+
+                            </Dropdown>
 
                         </Navbar.Collapse>
 

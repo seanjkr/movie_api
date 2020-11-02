@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import ListGroup from 'react-bootstrap/ListGroup';
 import Accordion from 'react-bootstrap/Accordion';
 import Form from 'react-bootstrap/Form';
 import './user-view.scss';
@@ -21,7 +22,14 @@ export class UserView extends React.Component {
       Birthday : null,
       FavoriteMovies : [],
       movies :[],
+      newUsername : '',
+      newEmail : '',
+      newPassword : '',
+      newBirthday : ''
     };
+
+    this.changeInfo = this.changeInfo.bind( this );
+    this.updateInfo = this.updateInfo.bind( this );
   }
 
   componentDidMount() {
@@ -55,15 +63,61 @@ export class UserView extends React.Component {
       headers : { Authorization : `Bearer ${token}`}
     })
     .then(( res ) => {
-      this.setState( {
+      this.setState({
         user : null
       })
+      localStorage.clear();
+      window.open( '/' , '_self' );
     })
     .catch( function( err ) {
       console.log( err );
     });
   }
 
+  removeFavoriteMovie( movie ) {
+    const Username = localStorage.getItem( 'user' );
+    const Token = localStorage.getItem( 'token' );
+
+    axios.delete( `https://seans-movie-api.herokuapp.com/users/${Username}/movies/${movie._id}` , {
+      headers : { Authorization : `Bearer ${Token}`}
+    })
+    .then(( res ) => {
+      window.open( '/users' , '_self' );
+    })
+    .catch( function( err ) {
+      console.log( err );
+    })
+  }
+
+  changeInfo( e ) {
+    this.setState( {
+      newUsername : e.target.value,
+      newPassword : e.target.value,
+      newEmail : e.target.value,
+      newBirthday : e.target.value
+    })
+  }
+
+  updateInfo( e ) {
+    e.preventDefault();
+    const Token = localStorage.getItem( 'token' );
+    const Username = localStorage.getItem( 'user' );
+    axios.put( `https://seans-movie-api.herokuapp.com/users/${Username}` , {
+      headers : { Authorization : `Bearer ${Token}`} , 
+      Username : this.state.newUsername,
+      Email : this.state.newEmail,
+      Password : this.state.newPassword,
+      Birthday : this.state.newBirthday
+    })
+    .then( response => {
+      const data = response.data;
+      console.log( data );
+      window.open( '/users' , '_self' );
+    })
+    .catch( e => {
+      console.log( 'error updating info')
+    });
+  };
 
   render() {
     const { movies } = this.props;
@@ -92,22 +146,22 @@ export class UserView extends React.Component {
 
                 <Card.Text className = "label"> Favorite Movies : </Card.Text>
 
-                <Card.Text>
+                <ListGroup>
 
                   { FavoriteList.map( ( movie ) => (
-                    <div className = "favorites-list_item">
+                    <ListGroup.Item action href = { `/movies/${movie._id}` } variant = "dark" className = "favorite-movie_card" >
 
-                      <Link to = { `/movies/${movie._id}` } > { movie.Title } </Link>
+                      <h3> { movie.Title } </h3>
 
-                      <Button className = "remove-favorite" onClick = { () => this.removeFavoriteMovie( movie._id ) } >
-                        Remove from Favorites
+                      <Button variant = "link" size = "sm" className = "remove-favorite" className = "justify-content-end" onClick = { () => removeFavoriteMovie( movie ) } >
+                        Remove
                       </Button>
                   
-                    </div>
+                    </ListGroup.Item>
                   
                   ))}
                   
-                </Card.Text>
+                </ListGroup>
 
               </Card.Body>
 
@@ -131,25 +185,25 @@ export class UserView extends React.Component {
 
                       <Form.Group controlId = "formBasicEmail">
                         <Form.Label> Email Address </Form.Label>
-                        <Form.Control type = "email" placeholder = "Enter email" />
+                        <Form.Control type = "email" placeholder = "New email" value = { this.state.newEmail } onChange = { this.changeInfo } />
                       </Form.Group>
 
                       <Form.Group controlId = "formBasicUsername">
                         <Form.Label> Username </Form.Label>
-                        <Form.Control type = "text" placeholder = "Choose Username" />
+                        <Form.Control type = "text" placeholder = "New Username" value = { this.state.newUsername } onChange = { this.changeInfo }/>
                       </Form.Group>
 
                       <Form.Group> 
                         <Form.Label> Password </Form.Label>
-                        <Form.Control type = "password" placeholder = "Password" />
+                        <Form.Control type = "password" placeholder = "New Password" value = { this.state.newPassword } onChange = { this.changeInfo }/>
                       </Form.Group>
 
                       <Form.Group> 
                         <Form.Label> Birthday </Form.Label>
-                        <Form.Control type = "date" />
+                        <Form.Control type = "date" value = { this.state.newBirthday } onChange = { this.changeInfo }/>
                       </Form.Group>
 
-                      <Button variant = "primary" type = "submit">
+                      <Button variant = "secondary" type = "submit" onClick = { this.updateInfo } >
                         Submit
                       </Button>
 

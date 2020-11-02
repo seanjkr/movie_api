@@ -13,6 +13,10 @@
 .navbar {
   min-height: 70px;
 }
+
+.nav-dropdown {
+  border: none;
+}
 .login-card {
   width: 20rems;
 }
@@ -32,6 +36,10 @@
 }
 .user-card {
   margin-bottom: 20px;
+}
+
+.favorite-movie_card {
+  display: inline-flex;
 }
 .movie-app {
   color: steelblue;
