@@ -43608,9 +43608,12 @@ var UserView = /*#__PURE__*/function (_React$Component) {
       newUsername: '',
       newEmail: '',
       newPassword: '',
-      newBirthday: ''
+      newBirthday: null
     };
-    _this.changeInfo = _this.changeInfo.bind(_assertThisInitialized(_this));
+    _this.changeEmail = _this.changeEmail.bind(_assertThisInitialized(_this));
+    _this.changeUsername = _this.changeUsername.bind(_assertThisInitialized(_this));
+    _this.changePassword = _this.changePassword.bind(_assertThisInitialized(_this));
+    _this.changeBirthday = _this.changeBirthday.bind(_assertThisInitialized(_this));
     _this.updateInfo = _this.updateInfo.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -43682,12 +43685,30 @@ var UserView = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
-    key: "changeInfo",
-    value: function changeInfo(e) {
+    key: "changeEmail",
+    value: function changeEmail(e) {
       this.setState({
-        newUsername: e.target.value,
-        newPassword: e.target.value,
-        newEmail: e.target.value,
+        newEmail: e.target.value
+      });
+    }
+  }, {
+    key: "changeUsername",
+    value: function changeUsername(e) {
+      this.setState({
+        newUsername: e.target.value
+      });
+    }
+  }, {
+    key: "changePassword",
+    value: function changePassword(e) {
+      this.setState({
+        newPassword: e.target.value
+      });
+    }
+  }, {
+    key: "changeBirthday",
+    value: function changeBirthday(e) {
+      this.setState({
         newBirthday: e.target.value
       });
     }
@@ -43768,24 +43789,21 @@ var UserView = /*#__PURE__*/function (_React$Component) {
       }, _react.default.createElement(_Form.default.Label, null, " Email Address "), _react.default.createElement(_Form.default.Control, {
         type: "email",
         placeholder: "New email",
-        value: this.state.newEmail,
-        onChange: this.changeInfo
+        onChange: this.changeEmail
       })), _react.default.createElement(_Form.default.Group, {
         controlId: "formBasicUsername"
       }, _react.default.createElement(_Form.default.Label, null, " Username "), _react.default.createElement(_Form.default.Control, {
         type: "text",
         placeholder: "New Username",
-        value: this.state.newUsername,
-        onChange: this.changeInfo
+        onChange: this.changeUsername
       })), _react.default.createElement(_Form.default.Group, null, _react.default.createElement(_Form.default.Label, null, " Password "), _react.default.createElement(_Form.default.Control, {
         type: "password",
         placeholder: "New Password",
-        value: this.state.newPassword,
-        onChange: this.changeInfo
+        onChange: this.changePassword
       })), _react.default.createElement(_Form.default.Group, null, _react.default.createElement(_Form.default.Label, null, " Birthday "), _react.default.createElement(_Form.default.Control, {
         type: "date",
-        value: this.state.newBirthday,
-        onChange: this.changeInfo
+        name: "newBirthday",
+        onChange: this.changeBirthday
       })), _react.default.createElement(_Button.default, {
         variant: "secondary",
         type: "submit",

@@ -25,10 +25,14 @@ export class UserView extends React.Component {
       newUsername : '',
       newEmail : '',
       newPassword : '',
-      newBirthday : ''
+      newBirthday : null,
     };
 
-    this.changeInfo = this.changeInfo.bind( this );
+    this.changeEmail = this.changeEmail.bind( this );
+    this.changeUsername = this.changeUsername.bind( this );
+    this.changePassword = this.changePassword.bind( this );
+    this.changeBirthday = this.changeBirthday.bind( this );
+
     this.updateInfo = this.updateInfo.bind( this );
   }
 
@@ -89,15 +93,30 @@ export class UserView extends React.Component {
     })
   }
 
-  changeInfo( e ) {
-    this.setState( {
-      newUsername : e.target.value,
-      newPassword : e.target.value,
-      newEmail : e.target.value,
-      newBirthday : e.target.value
-    })
+  changeEmail( e ) {
+    this.setState({
+      newEmail : e.target.value
+    });
   }
 
+  changeUsername( e ) {
+    this.setState({
+      newUsername : e.target.value
+    });
+  }
+  
+  changePassword( e ) {
+    this.setState({
+      newPassword : e.target.value
+    });
+  }
+
+  changeBirthday( e ) {
+    this.setState({
+      newBirthday : e.target.value
+    });
+  }
+  
   updateInfo( e ) {
     e.preventDefault();
     const Token = localStorage.getItem( 'token' );
@@ -118,6 +137,7 @@ export class UserView extends React.Component {
       console.log( 'error updating info')
     });
   };
+
 
   render() {
     const { movies } = this.props;
@@ -185,22 +205,22 @@ export class UserView extends React.Component {
 
                       <Form.Group controlId = "formBasicEmail">
                         <Form.Label> Email Address </Form.Label>
-                        <Form.Control type = "email" placeholder = "New email" value = { this.state.newEmail } onChange = { this.changeInfo } />
+                        <Form.Control type = "email" placeholder = "New email" onChange = { this.changeEmail } />
                       </Form.Group>
 
                       <Form.Group controlId = "formBasicUsername">
                         <Form.Label> Username </Form.Label>
-                        <Form.Control type = "text" placeholder = "New Username" value = { this.state.newUsername } onChange = { this.changeInfo }/>
+                        <Form.Control type = "text" placeholder = "New Username" onChange = { this.changeUsername }/>
                       </Form.Group>
 
                       <Form.Group> 
                         <Form.Label> Password </Form.Label>
-                        <Form.Control type = "password" placeholder = "New Password" value = { this.state.newPassword } onChange = { this.changeInfo }/>
+                        <Form.Control type = "password" placeholder = "New Password" onChange = { this.changePassword }/>
                       </Form.Group>
 
                       <Form.Group> 
                         <Form.Label> Birthday </Form.Label>
-                        <Form.Control type = "date" value = { this.state.newBirthday } onChange = { this.changeInfo }/>
+                        <Form.Control type = "date" name = "newBirthday" onChange = { this.changeBirthday }/>
                       </Form.Group>
 
                       <Button variant = "secondary" type = "submit" onClick = { this.updateInfo } >
