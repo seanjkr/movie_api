@@ -1,21 +1,23 @@
 import React from 'react';
 import axios from 'axios';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Navbar from 'react-bootstrap/Navbar';
-import Dropdown from 'react-bootstrap/Dropdown';
-import Button from 'react-bootstrap/Button';
-import './main-view.scss';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+import { setMovies } from '../../actions/actions';
+import MoviesList from '../movies-list/movies-list';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
-import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
 import { UserView } from '../user-view/user-view';
+
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Navbar from 'react-bootstrap/Navbar';
+import Dropdown from 'react-bootstrap/Dropdown';
+import './main-view.scss';
 
 
 export class MainView extends React.Component {
@@ -23,7 +25,6 @@ export class MainView extends React.Component {
         super();
 
         this.state = {
-            movies : [],
             user : null,
         };
     }
@@ -40,9 +41,7 @@ export class MainView extends React.Component {
 
     getMovies() {
         axios.get('https://seans-movie-api.herokuapp.com/movies').then(response => {
-            this.setState({
-              movies: response.data
-            });
+            this.props.setMovies( response.data );
         })
         .catch(function (error) {
             console.log(error);
@@ -57,11 +56,13 @@ export class MainView extends React.Component {
 
         localStorage.setItem( 'token' , authData.token );
         localStorage.setItem( 'user' , authData.user.Username );
+        this.getMovies( authData.token );
         window.open( '/' , '_self' );
     }
 
     render() {
-        const { movies , user } = this.state;
+        let { movies } = this.props;
+        let { user } = this.state;
 
         if ( !user ) return ( 
             <Router>
@@ -122,54 +123,6 @@ export class MainView extends React.Component {
             </Router> 
         );
     
-        if ( !movies ) return ( 
-            <Router>
-
-                <Container fluid className = "everything">
-
-                    <Navbar variant = "dark" fixed = "top" className = "bg-dark navbar">
-
-                        <Navbar.Brand href="/"> My Movies! </Navbar.Brand>
-
-                        <Navbar.Collapse className = "justify-content-end">
-
-                            <Dropdown alignRight>
-
-                                <Dropdown.Toggle className = "bg-dark nav-dropdown">
-                                    Do stuff
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu>
-
-                                    <Dropdown.Item href = "/users"> 
-                                        Profile
-                                    </Dropdown.Item>
-
-                                    <Dropdown.Divider />
-
-                                    <Dropdown.Item href = "/">
-                                        <div onClick = { () => localStorage.clear() } > Logout </div>
-                                    </Dropdown.Item>
-
-                                </Dropdown.Menu>
-
-                            </Dropdown>
-
-                        </Navbar.Collapse>
-
-                    </Navbar>
-
-                    <Route path = "/" render = { () => {
-                        return <div className="main-view"/>
-                    }}/>
-
-                </Container>
-
-            </Router> 
-            
-        );
-
-
         return (
             <Router>
 
@@ -209,11 +162,9 @@ export class MainView extends React.Component {
 
                     <Row className = "justify-content-center main-view">
 
-                        <Route exact path = "/" render = { () => movies.map( m => 
-                            <Col sm = {6} lg = {4}  xl = {3} className = "movie-card-col">
-                                <MovieCard key = { m._id } movie = {m} />
-                            </Col>
-                        )}/>
+                        <Route exact path = "/" render = { () => { 
+                            return <MoviesList movies = { movies } />;
+                        }}/>
 
                         <Route exact path = "/movies/:movieId" render = { ( { match } ) => {
                             return <MovieView movie = { movies.find( m => m._id === match.params.movieId ) }/> }
@@ -241,3 +192,9 @@ export class MainView extends React.Component {
         );
     }
 }
+
+let mapStateToProps = state => {
+    return { movies : state.movies }
+}
+
+export default connect( mapStateToProps , { setMovies })( MainView );

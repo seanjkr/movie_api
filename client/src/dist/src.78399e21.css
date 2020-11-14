@@ -1,22 +1,6 @@
 .movie-card-col {
   padding-bottom: 3rem;
 }
-
-.everything {
-  width: 100vw;
-}
-
-.main-view {
-  padding-top: 8rem;
-}
-
-.navbar {
-  min-height: 70px;
-}
-
-.nav-dropdown {
-  border: none;
-}
 .login-card {
   width: 20rems;
 }
@@ -40,6 +24,21 @@
 
 .favorite-movie_card {
   display: inline-flex;
+}
+.everything {
+  width: 100vw;
+}
+
+.main-view {
+  padding-top: 8rem;
+}
+
+.navbar {
+  min-height: 70px;
+}
+
+.nav-dropdown {
+  border: none;
 }
 .movie-app {
   color: steelblue;
