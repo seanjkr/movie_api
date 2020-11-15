@@ -5,7 +5,8 @@ const express = require('express'),
   mongoose = require('mongoose'),
   models = require('./models.js'),
   cors = require('cors'),
-  passport = require('passport'); require('./passport');
+  passport = require('passport'); require('./passport'),
+  path = require( 'path' );
 
 const { check, validationResult} = require('express-validator');
 
@@ -31,6 +32,12 @@ app.use("/users", passport.authenticate('jwt', { session: false }));
 app.use(bodyParser.json());
 
 app.use(express.static('public'));
+
+app.use( "/client" , express.static( path.join( __dirname , "client" , "dist" )));
+
+app.get( "/client/*" , ( req , res ) => { 
+  res.sendFile( path.join( __dirname , "client" , "dist" , "index.html" ))
+});
 
 let auth = require('./auth.js')(app);
 

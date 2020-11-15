@@ -4,7 +4,6 @@ import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-
 import { MovieCard } from '../movie-card/movie-card';
 
 import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
 import './movies-list.scss'
 
 const mapStateToProps = state => {
@@ -22,11 +21,19 @@ function MoviesList( props ) {
 
   if( !movies ) return <div className = "main-view" />;
 
-  return filteredMovies.map( m =>
-    <Col sm = {6} lg = {4}  xl = {3} className = "movie-card-col">
-      <MovieCard key = { m._id } movie = {m} /> 
-    </Col>
-  );
+  return <React.Fragment>
+
+      <Col xs = {10} className = "movie-card-col">
+        <VisibilityFilterInput visibilityFilter = { visibilityFilter } />
+      </Col>
+    
+      {filteredMovies.map( m =>
+        <Col sm = {6} lg = {4}  xl = {3} className = "movie-card-col" >
+          <MovieCard key = { m._id } movie = {m} />
+        </Col>
+      )}
+
+    </React.Fragment>
 }
 
 export default connect( mapStateToProps ) ( MoviesList );

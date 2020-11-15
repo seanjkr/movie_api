@@ -21,7 +21,7 @@ export class MovieView extends React.Component {
         headers : { Authorization : `Bearer ${Token}`}
       })
       .then(( res ) => {
-        window.open( '/users' , '_self' );
+        window.open( '/client/users' , '_self' );
       })
       .catch( function( err ) {
         console.log( err );

@@ -57,7 +57,7 @@ export class MainView extends React.Component {
         localStorage.setItem( 'token' , authData.token );
         localStorage.setItem( 'user' , authData.user.Username );
         this.getMovies( authData.token );
-        window.open( '/' , '_self' );
+        window.open( '/client' , '_self' );
     }
 
     render() {
@@ -65,7 +65,7 @@ export class MainView extends React.Component {
         let { user } = this.state;
 
         if ( !user ) return ( 
-            <Router>
+            <Router basename = "/client" >
 
                 <Container fluid className = "everything">
 
@@ -124,7 +124,7 @@ export class MainView extends React.Component {
         );
     
         return (
-            <Router>
+            <Router basename = "/client" >
 
                 <Container fluid className = "everything">
 
@@ -137,7 +137,7 @@ export class MainView extends React.Component {
                             <Dropdown alignRight>
 
                                 <Dropdown.Toggle className = "bg-dark nav-dropdown">
-                                    Do stuff
+                                    Account
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>

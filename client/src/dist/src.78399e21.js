@@ -37789,7 +37789,7 @@ function VisibilityFilterInput(props) {
       return props.setFilter(e.target.value);
     },
     value: props.visibilityFilter,
-    placeholder: "filter"
+    placeholder: "search"
   });
 }
 
@@ -38360,8 +38360,6 @@ var _movieCard = require("../movie-card/movie-card");
 
 var _Col = _interopRequireDefault(require("react-bootstrap/Col"));
 
-var _Card = _interopRequireDefault(require("react-bootstrap/Card"));
-
 require("./movies-list.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -38387,7 +38385,12 @@ function MoviesList(props) {
   if (!movies) return _react.default.createElement("div", {
     className: "main-view"
   });
-  return filteredMovies.map(function (m) {
+  return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_Col.default, {
+    xs: 10,
+    className: "movie-card-col"
+  }, _react.default.createElement(_visibilityFilterInput.default, {
+    visibilityFilter: visibilityFilter
+  })), filteredMovies.map(function (m) {
     return _react.default.createElement(_Col.default, {
       sm: 6,
       lg: 4,
@@ -38397,13 +38400,13 @@ function MoviesList(props) {
       key: m._id,
       movie: m
     }));
-  });
+  }));
 }
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(MoviesList);
 
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../visibility-filter-input/visibility-filter-input":"components/visibility-filter-input/visibility-filter-input.jsx","../movie-card/movie-card":"components/movie-card/movie-card.jsx","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","./movies-list.scss":"components/movies-list/movies-list.scss"}],"../node_modules/react-bootstrap/esm/Container.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../visibility-filter-input/visibility-filter-input":"components/visibility-filter-input/visibility-filter-input.jsx","../movie-card/movie-card":"components/movie-card/movie-card.jsx","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","./movies-list.scss":"components/movies-list/movies-list.scss"}],"../node_modules/react-bootstrap/esm/Container.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38700,7 +38703,7 @@ function RegistrationView(props) {
     }).then(function (response) {
       var data = response.data;
       console.log(data);
-      window.open('/', '_self');
+      window.open('/client', '_self');
     }).catch(function (e) {
       console.log('error registering user');
     });
@@ -38829,7 +38832,7 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
           Authorization: "Bearer ".concat(Token)
         }
       }).then(function (res) {
-        window.open('/users', '_self');
+        window.open('/client/users', '_self');
       }).catch(function (err) {
         console.log(err);
       });
@@ -46479,7 +46482,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       localStorage.setItem('token', authData.token);
       localStorage.setItem('user', authData.user.Username);
       this.getMovies(authData.token);
-      window.open('/', '_self');
+      window.open('/client', '_self');
     }
   }, {
     key: "render",
@@ -46488,7 +46491,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
       var movies = this.props.movies;
       var user = this.state.user;
-      if (!user) return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_Container.default, {
+      if (!user) return _react.default.createElement(_reactRouterDom.BrowserRouter, {
+        basename: "/client"
+      }, _react.default.createElement(_Container.default, {
         fluid: true,
         className: "everything"
       }, _react.default.createElement(_Navbar.default, {
@@ -46570,7 +46575,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           });
         }
       }))));
-      return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_Container.default, {
+      return _react.default.createElement(_reactRouterDom.BrowserRouter, {
+        basename: "/client"
+      }, _react.default.createElement(_Container.default, {
         fluid: true,
         className: "everything"
       }, _react.default.createElement(_Navbar.default, {
@@ -46585,7 +46592,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         alignRight: true
       }, _react.default.createElement(_Dropdown.default.Toggle, {
         className: "bg-dark nav-dropdown"
-      }, "Do stuff"), _react.default.createElement(_Dropdown.default.Menu, null, _react.default.createElement(_Dropdown.default.Item, {
+      }, "Account"), _react.default.createElement(_Dropdown.default.Menu, null, _react.default.createElement(_Dropdown.default.Item, {
         href: "/users"
       }, "Profile"), _react.default.createElement(_Dropdown.default.Divider, null), _react.default.createElement(_Dropdown.default.Item, {
         href: "/"
