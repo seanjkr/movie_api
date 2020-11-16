@@ -3,7 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import { setMovies } from '../../actions/actions';
+import { setMovies , setUser } from '../../actions/actions';
 import MoviesList from '../movies-list/movies-list';
 
 import { LoginView } from '../login-view/login-view';
@@ -23,18 +23,12 @@ import './main-view.scss';
 export class MainView extends React.Component {
     constructor() {
         super();
-
-        this.state = {
-            user : null,
-        };
     }
       
     componentDidMount() {
         let accessToken = localStorage.getItem( 'token' );
-        if (accessToken !==null) {
-            this.setState({
-                user : localStorage.getItem('user')
-            });
+        if (accessToken !== null ) {
+            this.props.setUser( localStorage.getItem('user') );
             this.getMovies();
         }
     }
@@ -50,35 +44,40 @@ export class MainView extends React.Component {
 
     onLoggedIn( authData ) {
         console.log( authData );
-        this.setState( {
-            user : authData.user.Username
-        });
-
+        this.props.setUser( authData.user.Username );
         localStorage.setItem( 'token' , authData.token );
         localStorage.setItem( 'user' , authData.user.Username );
         this.getMovies( authData.token );
         window.open( '/client' , '_self' );
     }
 
+
+    onLoggedOut() {
+        localStorage.clear();
+        this.props.setUser( null );
+        window.open( '/client' , '_self' );
+    }
+
+
     render() {
         let { movies } = this.props;
-        let { user } = this.state;
+        let { user } = this.props;
 
-        if ( !user ) return ( 
+        if ( user === null ) return ( 
             <Router basename = "/client" >
 
                 <Container fluid className = "everything">
 
                     <Navbar variant = "dark" fixed = "top" className = " bg-dark navbar">
 
-                        <Navbar.Brand href="/"> My Movies! </Navbar.Brand>
+                        <Navbar.Brand href="/client"> My Movies! </Navbar.Brand>
 
                         <Navbar.Collapse className = "justify-content-end">
 
                             <Navbar.Text className = "navbar-text">
-                                <a href = "/login"> Login </a>
+                                <a href = "/client/login"> Login </a>
                                 / 
-                                <a href = "/register"> Register </a>
+                                <a href = "/client/register"> Register </a>
                             </Navbar.Text>
 
                         </Navbar.Collapse>
@@ -194,7 +193,15 @@ export class MainView extends React.Component {
 }
 
 let mapStateToProps = state => {
-    return { movies : state.movies }
+    return { 
+        movies : state.movies,
+        user : state.user
+    }    
 }
 
-export default connect( mapStateToProps , { setMovies })( MainView );
+let mapDispatchToProps = {
+    setMovies,
+    setUser
+}
+
+export default connect( mapStateToProps , mapDispatchToProps , null , { setMovies , setUser })( MainView );

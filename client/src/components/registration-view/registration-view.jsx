@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import axios from 'axios';
 
 
 export function RegistrationView( props ) {
@@ -26,7 +26,7 @@ export function RegistrationView( props ) {
     .then( response => {
       const data = response.data;
       console.log( data );
-      window.open( '/client' , '_self' );
+      window.open( '/client/login' , '_self' );
     })
     .catch( e => {
       console.log( 'error registering user')
