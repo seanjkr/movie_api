@@ -122,7 +122,7 @@ export class MainView extends React.Component {
 
                     <Navbar variant = "dark" fixed = "top" className = "bg-dark navbar">
 
-                        <Navbar.Brand href="/"> My Movies! </Navbar.Brand>
+                        <Navbar.Brand href="/client"> My Movies! </Navbar.Brand>
 
                         <Navbar.Collapse className = "justify-content-end">
 
@@ -134,13 +134,13 @@ export class MainView extends React.Component {
 
                                 <Dropdown.Menu>
 
-                                    <Dropdown.Item href = "/users"> 
+                                    <Dropdown.Item href = "client/users"> 
                                         Profile
                                     </Dropdown.Item>
 
                                     <Dropdown.Divider />
 
-                                    <Dropdown.Item href = "/" >
+                                    <Dropdown.Item href = "/client" >
                                         <div onClick = { () => localStorage.clear() } > Logout </div>
                                     </Dropdown.Item>
 
