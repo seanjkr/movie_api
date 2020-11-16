@@ -36,7 +36,7 @@ app.use(express.static('public'));
 app.use( "/client" , express.static( path.join( __dirname , "client" , "dist" )));
 
 app.get( "/client/*" , ( req , res ) => { 
-  res.sendFile( path.join( __dirname , "client" , "dist" , "index.html" ))
+  res.sendFile( path.join( __dirname , "client" , "dist" , "index.html" ));
 });
 
 let auth = require('./auth.js')(app);
