@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { setUser } from '../../actions/actions';
 import { UpdateInfoView } from './user-update-card';
 
 import Button from 'react-bootstrap/Button';
@@ -59,26 +58,27 @@ export class UserView extends React.Component {
         user : null
       })
       localStorage.clear();
-      window.open( '/' , '_self' );
+      window.open( '/client' , '_self' );
     })
     .catch( function( err ) {
       console.log( err );
     });
   }
 
-  removeFavoriteMovie( movie ) {
+  removeFavorite( movie ) {
     const Username = localStorage.getItem( 'user' );
     const Token = localStorage.getItem( 'token' );
 
-    axios.delete( `https://seans-movie-api.herokuapp.com/users/${Username}/movies/${movie._id}` , {
+    axios.delete( `https://seans-movie-api.herokuapp.com/users/${Username}/movies/${movie}` , {
       headers : { Authorization : `Bearer ${Token}`}
     })
     .then(( res ) => {
-      window.open( '/users' , '_self' );
+      console.log( res );
+      window.open( '/client/users' , '_self' );
     })
     .catch( function( err ) {
       console.log( err );
-    })
+    });
   }
 
 
@@ -146,7 +146,7 @@ export class UserView extends React.Component {
 
                           <Card.Footer>
 
-                          <Button variant = "secondary" size = "sm" className = "remove-favorite" className = "justify-content-end" onClick = { () => removeFavoriteMovie( movie ) } >
+                          <Button variant = "secondary" size = "sm" className = "remove-favorite" onClick = { () => this.removeFavorite( movie._id ) } >
                             Remove Favorite
                           </Button>
 

@@ -1,9 +1,11 @@
 import React from 'react';
+import axios from 'axios';
+import { Link } from "react-router-dom";
+
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import './movie-view.scss';
-import { Link } from "react-router-dom";
 
 
 export class MovieView extends React.Component {
@@ -17,16 +19,17 @@ export class MovieView extends React.Component {
       const Username = localStorage.getItem( 'user' );
       const Token = localStorage.getItem( 'token' );
   
-      axios.post( `https://seans-movie-api.herokuapp.com/users/${Username}/movies/${movie._id}` , {
-        headers : { Authorization : `Bearer ${Token}`}
+      axios.post( `https://seans-movie-api.herokuapp.com/users/${Username}/movies/${movie}` , {
+        headers : { Authorization : `Bearer ${Token}`} 
       })
       .then(( res ) => {
+        console.log( res );
         window.open( '/client/users' , '_self' );
       })
       .catch( function( err ) {
         console.log( err );
-      })
-    }
+      });
+   }
 
    render() {
       const { movie } = this.props;
@@ -70,7 +73,9 @@ export class MovieView extends React.Component {
                      <Button className = "back-button primary"> Back </Button>
                   </Link>
 
-                  <Button variant = "link" onClick = {() => addFavorite( movie ) } > Add to Favorites </Button>
+                  <Button variant = "link" onClick = {() => this.addFavorite( movie._id ) } > 
+                     Add to Favorites 
+                  </Button>
 
                </Card.Body>
 

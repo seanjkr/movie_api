@@ -17,6 +17,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Navbar from 'react-bootstrap/Navbar';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Spinner from 'react-bootstrap/Spinner';
 import './main-view.scss';
 
 
@@ -50,14 +51,6 @@ export class MainView extends React.Component {
         this.getMovies( authData.token );
         window.open( '/client' , '_self' );
     }
-
-
-    onLoggedOut() {
-        localStorage.clear();
-        this.props.setUser( null );
-        window.open( '/client' , '_self' );
-    }
-
 
     render() {
         let { movies } = this.props;
@@ -180,7 +173,7 @@ export class MainView extends React.Component {
                         }/>
 
                         <Route exact path = "/users" render = { () => {
-                            return <UserView movies = { movies }/> }
+                            return <UserView movies = { movies } /> }
                         }/>
 
                     </Row>
