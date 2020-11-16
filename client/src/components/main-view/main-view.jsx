@@ -134,7 +134,7 @@ export class MainView extends React.Component {
 
                                 <Dropdown.Menu>
 
-                                    <Dropdown.Item href = "client/users"> 
+                                    <Dropdown.Item href = "/client/users"> 
                                         Profile
                                     </Dropdown.Item>
 
