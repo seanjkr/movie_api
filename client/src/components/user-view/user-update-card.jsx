@@ -30,7 +30,7 @@ export function UpdateInfoView( props ) {
     .then( response => {
       const data = response.data;
       console.log( data );
-      window.open( '/users' , '_self' );
+      window.open( '/client/users' , '_self' );
     })
     .catch( e => {
       console.log( 'error updating user')
